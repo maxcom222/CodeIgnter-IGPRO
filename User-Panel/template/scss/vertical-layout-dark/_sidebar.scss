@@ -1,0 +1,192 @@
+/* Sidebar */
+
+.sidebar {
+  min-height: calc(100vh - #{$navbar-height});
+  background: $sidebar-bg;
+  font-family: $type1;
+  font-weight: 400;
+  padding: 0;
+  width: $sidebar-width-lg;
+  z-index: 11;
+  transition: width $action-transition-duration $action-transition-timing-function, background $action-transition-duration $action-transition-timing-function;
+  -webkit-transition: width $action-transition-duration $action-transition-timing-function, background $action-transition-duration $action-transition-timing-function;
+  -moz-transition: width $action-transition-duration $action-transition-timing-function, background $action-transition-duration $action-transition-timing-function;
+  -ms-transition: width $action-transition-duration $action-transition-timing-function, background $action-transition-duration $action-transition-timing-function;
+
+  .nav {
+    overflow: hidden;
+    flex-wrap: nowrap;
+    flex-direction: column;
+    margin-bottom: 60px;
+
+    .nav-item {
+      @include transition-duration(0.25s);
+      transition-property: background;
+      -webkit-transition-property: background;
+      .collapse {
+        z-index: 999;
+      }
+
+      .nav-link {
+        @include display-flex;
+        @include align-items(center);
+        white-space: nowrap;
+        padding: $sidebar-menu-padding-top $sidebar-menu-padding-right $sidebar-menu-padding-bottom $sidebar-menu-padding-left;
+        color: $sidebar-menu-color;
+        @include transition-duration(0.45s);
+        transition-property: color;
+        -webkit-transition-property: color;
+
+        i {
+          color: inherit;
+
+          &.menu-icon {
+            font-size: $sidebar-icon-font-size;
+            line-height: 1;
+            margin-right: 1.125rem;
+            .rtl & {
+              margin-left: 2rem;
+              margin-right: 0;
+            }
+            color: $sidebar-menu-icon-color;
+            &:before {
+              vertical-align: middle;
+            }
+          }
+          &.menu-arrow {
+            display: inline-block;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            margin-left: auto;
+            margin-right: 0;
+            color: $sidebar-menu-arrow-color;
+            .rtl & {
+              margin-left: 0;
+              margin-right: auto;
+            }
+
+            &:before {
+              content: "\F140";
+              font-family: "Material Design Icons";
+              font-style: normal;
+              display: block;
+              font-size: 1rem;
+              line-height: 10px;
+              @include transition(all .2s ease-in);
+            }
+          }
+        }
+
+        .menu-title {
+          color: inherit;
+          display: inline-block;
+          font-size: $sidebar-menu-font-size;
+          line-height: 1;
+          vertical-align: middle;
+          font-weight: 400;
+        }
+
+        .badge {
+          margin-left: auto;
+          .rtl & {
+            margin-left: 0;
+            margin-right: auto;
+          }
+        }
+        &[aria-expanded="true"] {
+          i {
+            &.menu-arrow {
+              &:before {
+                @include rotate(180);
+              }
+            }
+          }
+        }
+      }
+
+      &.active {
+        > .nav-link {
+            background: $sidebar-menu-active-bg;
+            position: relative;
+            i,
+            .menu-title,
+            .menu-arrow {
+              color: $sidebar-menu-active-color;
+            }
+            &:before {
+              content:"";
+              position: absolute;
+              width: 5px;
+              height: 100%;
+              background: $sidebar-menu-active-border;
+              left: 0;
+              top: 0;
+            }
+        }
+      }
+    }
+
+    &:not(.sub-menu) {
+      margin-top: .5rem;
+      > .nav-item {
+        margin-top: .625rem;
+        > .nav-link {
+          margin: 0;
+        }
+        &:hover {
+          > .nav-link {
+            background: $sidebar-menu-hover-bg;
+            color: $sidebar-menu-hover-color;                                    
+          }
+        }
+      }
+    }
+    &.sub-menu {
+      margin-bottom: 0;
+      margin-top:0;
+      list-style: none;
+      padding: $sidebar-submenu-padding;
+
+      .nav-item {
+        padding: 0;
+        .nav-link {
+          color: $sidebar-submenu-color;
+          padding: $sidebar-submenu-item-padding;
+          position: relative;
+          font-size: $sidebar-submenu-font-size;
+          line-height: 1;
+          height: auto;
+          border-top: 0;
+          &:hover {
+            color: $sidebar-submenu-hover-color;
+          }
+          &.active {
+            color: $sidebar-submenu-active-color;
+            background: transparent;
+          }
+        }
+        &:hover {
+          background: transparent;
+        }
+      }
+    }
+  }
+}
+
+/* style for off-canvas menu*/
+@media screen and (max-width: 991px) {
+  .sidebar-offcanvas {
+    position: fixed;
+    max-height: calc(100vh - #{$navbar-height});
+    top: $navbar-height;
+    bottom: 0;
+    overflow: auto;
+    right: -$sidebar-width-lg;
+    -webkit-transition: all 0.25s ease-out;
+    -o-transition: all 0.25s ease-out;
+    transition: all 0.25s ease-out;
+    &.active {
+      right: 0;
+    }
+  }
+}
